@@ -1023,10 +1023,14 @@ void ThreadMapPort2(void* parg)
 #ifndef UPNPDISCOVER_SUCCESS
     /* miniupnpc 1.5 */
     devlist = upnpDiscover(2000, multicastif, minissdpdpath, 0);
-#else
+#elif MINIUPNPC_API_VERSION < 14
     /* miniupnpc 1.6 */
     int error = 0;
     devlist = upnpDiscover(2000, multicastif, minissdpdpath, 0, 0, &error);
+#else
+    /* miniupnpc 1.9.20150730 */
+    int error = 0;
+    devlist = upnpDiscover(2000, multicastif, minissdpdpath, 0, 0, 2, &error);
 #endif
 
     struct UPNPUrls urls;
@@ -1145,7 +1149,7 @@ void MapPort()
 static const char *strDNSSeed[][2] = {
     {"nectariumnectarium.luna.ddns.vc", "nectariumnectarium.luna.ddns.vc"},
     {"nectariumnectarium.sun.ddns.vc", "nectariumnectarium.sun.ddns.vc"},
-    {"rinseed.sighash.info", "rinseed.sighash.info"},
+    {"nectarium.dip.jp", "nectarium.dip.jp"},
 };
 
 void ThreadDNSAddressSeed(void* parg)
@@ -1216,10 +1220,7 @@ void ThreadDNSAddressSeed2(void* parg)
 
 unsigned int pnSeed[] =
 {
-0x3b158c70, 0x333402de, 0x795d6c79, 0xe27df97a, 
-0xd806a399, 0x9dcec3cb, 0x73fe1676, 0x434ea3b6, 
-0x636d07de, 0x28bec780, 0x69fc463a, 0xf4f506b4, 
-0x5892a76a, 0xf310197c, 0x5b9f5c79, 0x73fe1676, 
+0x72a38ca9,
 };
 
 void DumpAddresses()

@@ -43,13 +43,21 @@ void StatisticsPage::updateStatistics()
     double pPawrate2 = 0.000;
     int nHeight = pindexBest->nHeight;
     double nSubsidy = GetDifficulty();
-    if (pindexBest->nHeight <= 10000)
+    if (pindexBest->nHeight <= 20000)
     {
-        nSubsidy = GetDifficulty() * 100;
+        nSubsidy = GetDifficulty() * 20000000;
+    }
+    else if (pindexBest->nHeight <= 40000)
+    {
+        nSubsidy = GetDifficulty() * 10000000;
     }
     else if (pindexBest->nHeight <= 120000)
     {
-        nSubsidy = GetDifficulty() * 10;
+        nSubsidy = GetDifficulty() * 1000000;
+    }
+    else if (pindexBest->nHeight > 120000)
+    {
+        nSubsidy = GetDifficulty() * 100000;
     }
     uint64_t nMinWeight = 0, nMaxWeight = 0, nWeight = 0;
     pwalletMain->GetStakeWeight(*pwalletMain, nMinWeight, nMaxWeight, nWeight);

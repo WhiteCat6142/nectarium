@@ -983,7 +983,7 @@ static double getdifficulty_prev(const CBlockIndex* blockindex)
 int64_t GetProofOfWorkReward(const CBlockIndex* blockindex)
 {
     double diff = getdifficulty_prev(blockindex);
-    int64_t nSubsidy = (int64_t)round(diff * COIN * 100) + 10 * COIN;
+    int64_t nSubsidy = (int64_t)round(diff * COIN * 100000) + 500 * COIN;
 
     return nSubsidy;
 }
@@ -991,12 +991,14 @@ int64_t GetProofOfWorkReward(const CBlockIndex* blockindex)
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(const CBlockIndex* blockindex, int64_t nFees)
 {
-    int64_t nRewardCoin = 1;
+    int64_t nRewardCoin = 100000;
 
 	if(blockindex->nHeight <= 20000)
-		nRewardCoin = 100;
+		nRewardCoin = 20000000;
+	else if(blockindex->nHeight <= 40000)
+		nRewardCoin = 10000000;
 	else if(blockindex->nHeight <= 120000)
-		nRewardCoin = 10;
+		nRewardCoin = 1000000;
 
     double diff = getdifficulty_prev(blockindex);
     int64_t nSubsidy = (int64_t)round(diff * COIN * nRewardCoin) ;
@@ -1006,12 +1008,14 @@ int64_t GetProofOfStakeReward(const CBlockIndex* blockindex, int64_t nFees)
 
 int64_t GetProofOfStakeRewardCurrent(int64_t nFees)
 {
-    int64_t nRewardCoin = 1;
+    int64_t nRewardCoin = 100000;
 
 	if(nBestHeight+1 <= 20000)
-		nRewardCoin = 100;
+		nRewardCoin = 20000000;
+	else if(nBestHeight+1 <= 40000)
+		nRewardCoin = 10000000;
 	else if(nBestHeight+1 <= 120000)
-		nRewardCoin = 10;
+		nRewardCoin = 1000000;
 
     int64_t nSubsidy = (int64_t)round(GetDifficulty() * COIN * nRewardCoin) ;
 
@@ -2606,9 +2610,9 @@ bool LoadBlockIndex(bool fAllowNew)
         if (!fAllowNew)
             return false;
 
-        const char* pszTimestamp = "Next2ch";
+        const char* pszTimestamp = "Nectarim at Next2ch";
         CTransaction txNew;
-        txNew.nTime = 1463965653;
+        txNew.nTime = 1465624783;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 0 << CBigNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
@@ -2618,12 +2622,12 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1463965653;
+        block.nTime    = 1465624783;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 1631306;
+        block.nNonce   = 1803301;
         if (fTestNet)
         {
-            block.nNonce   = 1631306;
+            block.nNonce   = 1803301;
         }
 
 /**/
@@ -2649,7 +2653,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nNonce = %u \n", block.nNonce);
 /**/
 
-        assert(block.hashMerkleRoot == uint256("0xa004ba692060c2a679e8669d00ae836ba5e1490eb47e9f058705204f4f16f2df"));
+        assert(block.hashMerkleRoot == uint256("0xb043fda08bb9c6dcd826e1ca1c4ce6c30bd95dc435f1109f6ae36b1acc7a8444"));
         block.print();
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
         assert(block.CheckBlock());
