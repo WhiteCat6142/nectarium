@@ -1148,11 +1148,14 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
     // Limit adjustment step
     int64_t nActualTimespan = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
-    //if (fDebug)
+
+    //Stable difficulty - new algorithm
+    if(nHeight>=18000)nActualTimespan = (pindexPrev->GetBlockTime() - pindexPrevPrev->pprev->pprev->pprev->GetBlockTime())/4;
+
+    if (fDebug)
     printf("  nActualTimespan = %"PRId64"  before bounds\n", nActualTimespan);
 
-    int64_t nActualTimespanX = pindexPrev->GetBlockTime() - pindexPrevPrev->pprev->pprev->pprev->GetBlockTime();
-    printf("  nActualTimespan = %"PRId64"  before bounds\n", nActualTimespanX/4);
+
 
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
@@ -1172,11 +1175,13 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     bnNew *= nActualTimespan;
     bnNew /= retargetTimespan;
 
+/*
     /// debug print
     printf("GetNextWorkRequired RETARGET \n");
-    //printf("retargetTimespan = %"PRId64"    nActualTimespan = %"PRId64"\n", retargetTimespan, nActualTimespan);
+    printf("retargetTimespan = %"PRId64"    nActualTimespan = %"PRId64"\n", retargetTimespan, nActualTimespan);
     printf("Before: %08x  %s\n", pindexLast->nBits, CBigNum().SetCompact(pindexLast->nBits).getuint256().ToString().c_str());
     printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
+*/
 
     if (bnNew > bnTargetLimit)
         bnNew = bnTargetLimit;
