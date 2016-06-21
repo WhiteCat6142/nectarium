@@ -1148,6 +1148,10 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
     // Limit adjustment step
     int64_t nActualTimespan = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+
+    //Stable difficulty - new algorithm
+    if(nHeight>=18000)nActualTimespan = (pindexPrev->GetBlockTime() - pindexPrevPrev->pprev->pprev->pprev->GetBlockTime())/4;
+
     if (fDebug)
     printf("  nActualTimespan = %"PRId64"  before bounds\n", nActualTimespan);
 
