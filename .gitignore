@@ -1,0 +1,5 @@
+*.qm
+Makefile
+build/
+qrc_bitcoin.cpp
+nectarium-qt
