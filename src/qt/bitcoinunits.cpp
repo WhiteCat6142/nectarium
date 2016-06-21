@@ -14,6 +14,7 @@ QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
     unitlist.append(BTC);
     unitlist.append(mBTC);
     unitlist.append(uBTC);
+    unitlist.append(kBTC);
     return unitlist;
 }
 
@@ -24,6 +25,7 @@ bool BitcoinUnits::valid(int unit)
     case BTC:
     case mBTC:
     case uBTC:
+    case kBTC:
         return true;
     default:
         return false;
@@ -37,6 +39,7 @@ QString BitcoinUnits::name(int unit)
     case BTC: return QString("NEP");
     case mBTC: return QString("mNEP");
     case uBTC: return QString::fromUtf8("μNEP");
+    case kBTC: return QString("kNEP");
     default: return QString("???");
     }
 }
@@ -48,6 +51,7 @@ QString BitcoinUnits::description(int unit)
     case BTC: return QString("Nectariums");
     case mBTC: return QString("Milli-Nectariums (1 / 1,000)");
     case uBTC: return QString("Micro-Nectariums (1 / 1,000,000)");
+    case kBTC: return QString("Kilo-Nectariums (1 * 1,000)");
     default: return QString("???");
     }
 }
@@ -59,6 +63,7 @@ qint64 BitcoinUnits::factor(int unit)
     case BTC:  return 100000000;
     case mBTC: return 100000;
     case uBTC: return 100;
+    case kBTC: return 100000000000;
     default:   return 100000000;
     }
 }
@@ -70,6 +75,7 @@ int BitcoinUnits::amountDigits(int unit)
     case BTC: return 8; // 21,000,000 (# digits, without commas)
     case mBTC: return 11; // 21,000,000,000
     case uBTC: return 14; // 21,000,000,000,000
+    case kBTC: return 5; // 21,000
     default: return 0;
     }
 }
@@ -81,6 +87,7 @@ int BitcoinUnits::decimals(int unit)
     case BTC: return 8;
     case mBTC: return 5;
     case uBTC: return 2;
+    case kBTC: return 11;
     default: return 0;
     }
 }
