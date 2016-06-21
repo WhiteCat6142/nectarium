@@ -5,9 +5,9 @@ SetCompressor /SOLID lzma
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 1.1.1.0
+!define VERSION 1.1.2.0
 !define COMPANY "Nectarium project"
-!define URL https://github.com/dkwzjw/Nectarium/
+!define URL https://github.com/nectarium/nectarium/
 
 # MUI Symbol Definitions
 !define MUI_ICON "../share/pixmaps/bitcoin.ico"
@@ -45,13 +45,13 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile nectarium-1.1.1.0-win32-setup.exe
+OutFile nectarium-1.1.2.0-win32-setup.exe
 InstallDir $PROGRAMFILES\Nectarium
 CRCCheck on
 XPStyle on
 BrandingText " "
 ShowInstDetails show
-VIProductVersion 1.1.1.0
+VIProductVersion 1.1.2.0
 VIAddVersionKey ProductName Nectarium
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
